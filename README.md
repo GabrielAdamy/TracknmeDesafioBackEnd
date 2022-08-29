@@ -26,8 +26,9 @@ Body: {
 - http://localhost:8080/employee/{id}
 
 ### PUT
-- http://localhost:8080/employee/update/{id}
- Body: {
+- http://localhost:8080/employee/update/{id} 
+
+ - Body: {
             "name": String, (OBRIGATÓRIO)
             "age": int, (OBRIGATÓRIO)
             "sex": String,
@@ -39,8 +40,9 @@ Body: {
 }
 
 ### PATCH
-- http://localhost:8080/employee/{id}
- Body: {
+- http://localhost:8080/employee/{id} -
+
+ - Body: {
             "name": String, (OBRIGATÓRIO)
             "age": int, (OBRIGATÓRIO)
             "sex": String,
