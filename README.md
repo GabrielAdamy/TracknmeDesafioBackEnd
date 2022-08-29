@@ -1,9 +1,10 @@
 # TracknmeDesafioBackEnd
 
-# Projeto com intuito de testar a a evolução do desenvolvedor jr na empresa Tracknme
+-- Projeto com intuito de testar a a evolução do desenvolvedor jr na empresa Tracknme
 
-# ENDPOINTS 
-POST
+### ENDPOINTS 
+
+### POST
 - http://localhost:8080/employee/create
 Body: {
    "name": String, (OBRIGATÓRIO)
@@ -12,19 +13,19 @@ Body: {
    "cep": String (OBRIGATÓRIO)
 }
 
-GET
+### GET
 - http://localhost:8080/employee
 
-GET
+### GET
 - http://localhost:8080/employee/cep/{cep String}
 
-GET
-- http://localhost:8080/viacep/cep/93110270
+### GET
+- http://localhost:8080/viacep/cep/{cep String}
 
-DELETE
+### DELETE
 - http://localhost:8080/employee/{id}
 
-PUT
+### PUT
 - http://localhost:8080/employee/update/{id}
 Body: {
             "name": String, (OBRIGATÓRIO)
@@ -37,7 +38,7 @@ Body: {
             "state": String
 }
 
-PATCH
+### PATCH
 - http://localhost:8080/employee/{id}
 Body: {
             "name": String, (OBRIGATÓRIO)
