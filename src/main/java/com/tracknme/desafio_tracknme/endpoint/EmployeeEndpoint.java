@@ -12,10 +12,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
-import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @RequestMapping("/employee")
@@ -26,14 +24,14 @@ public class EmployeeEndpoint {
 
     @GetMapping(path = "/{id}")
     @Cacheable("id")
-    public Optional<Employee> getById(@PathVariable Long id) {
+    public Employee getById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @GetMapping(path = "/cep/{cep}")
     @Cacheable("cep")
-    public List<Employee> findByCep(@PathVariable String cep) {
-        return service.findByCep(cep);
+    public Page<Employee> findByCep(@PathVariable String cep, Pageable pageable) {
+        return service.findByCep(cep, pageable);
     }
 
     @GetMapping
@@ -52,17 +50,14 @@ public class EmployeeEndpoint {
         return new ResponseEntity<Employee>(HttpStatus.OK);
     }
 
-    @PutMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Employee> update(@RequestBody @Valid Employee employee) {
+    @PutMapping(path = "/update/{id}")
+    public ResponseEntity<Employee> updateE(@RequestBody @Valid Employee employee) {
         Employee resource = service.update(employee);
-        return new ResponseEntity<>(resource, HttpStatus.OK);
+        return new ResponseEntity<>(resource, HttpStatus.NO_CONTENT);
     }
 
-    @PatchMapping(path = "/update/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<Employee> update(@PathVariable Long id, @RequestBody @Valid Employee employee) {
-        Employee resource = service.update(id, employee);
-       return new ResponseEntity<>(resource, HttpStatus.OK);
+    @PatchMapping(path = "/{id}")
+    public void update(@PathVariable Long id, @RequestBody @Valid Map<String, Object> response) {
+        service.updatePatch(id, response);
     }
 }

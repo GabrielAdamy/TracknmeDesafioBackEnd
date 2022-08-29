@@ -9,17 +9,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
-import org.springframework.http.ResponseEntity;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EmployeeServiceTest {
@@ -37,21 +34,59 @@ public class EmployeeServiceTest {
     private ViaCepDTO cep = new ViaCepDTO();
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
+        employee = new Employee();
 
         employee.setId(1L);
         employee.setName("Gabriel");
         employee.setAge(26L);
         employee.setCep("93110270");
         employee.setSex("Masculino");
+        employee.setAddress("Rua Fernando Abott");
+        employee.setCity("São Leopoldo");
+        employee.setState("RS");
+        employee.setDistrict("Rio dos Sinos");
 
-       // when(client.cep(employee.getCep())).then(cep);
+        cep.setLogradouro("Rua Fernando Abott");
+        cep.setLocalidade("São Leopoldo");
+        cep.setUf("RS");
+        cep.setBairro("Rio dos Sinos");
+        cep.setCep("93110270");
+
+        when(client.cep(employee.getCep())).thenReturn(cep);
+        when(service.create(employee)).thenReturn(employee);
+        when(repository.findById(1L)).thenReturn(Optional.ofNullable(employee));
 
     }
 
-//    @Test
-//    public void testCreateEmployee() throws Exception {
-//        var employeer = service.create(employee);
-//        verify(service).create(employeer);
-//    }
+
+    @Test
+    public void testCreateEmployee() throws Exception {
+        var employeer = service.create(employee);
+        assertEquals("Gabriel", employeer.getName());
+        assertEquals("Rua Fernando Abott", employeer.getAddress());
+    }
+
+    @Test
+    public void testDeleteEmployee(){
+        service.delete(1L);
+    }
+
+    @Test
+    public void testFindByIdEmployee(){
+        var result = service.findById(1L);
+        assertEquals(employee, result);
+    }
+
+    @Test
+    public void testUpdate() {
+        var result = service.findById(1L);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", "Adamy");
+        parameters.put("cep", result.getCep());
+        parameters.put("sex", "Masculino");
+
+        service.updatePatch(1L, parameters);
+        assertEquals(employee.getName(), "Adamy");
+    }
 }

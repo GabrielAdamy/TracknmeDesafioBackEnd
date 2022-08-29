@@ -16,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @EnableCaching
 public class ViaCepClient {
-    public ResponseEntity<ViaCepDTO> cep(@PathVariable(name = "cep") String cep) {
+    public ViaCepDTO cep(@PathVariable(name = "cep") String cep) {
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -28,6 +28,6 @@ public class ViaCepClient {
         //faz um GET, converte a resposta HTTP em um tipo de objeto e retorna esse objeto
         ViaCepDTO viaCepDTO = restTemplate.getForObject(uri, ViaCepDTO.class, params);
 
-        return new ResponseEntity<ViaCepDTO>(viaCepDTO, HttpStatus.OK);
+        return viaCepDTO;
     }
 }

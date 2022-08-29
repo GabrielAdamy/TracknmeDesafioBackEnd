@@ -58,7 +58,7 @@ public class Employee {
 
     @JsonIgnore
     @AssertTrue
-    public boolean isValid() {
+    public boolean isValid() throws Exception {
         return EmployeeValidation.isValid(this);
     }
 }

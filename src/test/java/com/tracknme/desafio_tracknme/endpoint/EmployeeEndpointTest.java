@@ -9,6 +9,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -57,15 +60,25 @@ public class EmployeeEndpointTest {
     }
 
     @Test
-    public void testEndPointDelete(){
+    public void testEndPointDelete() {
         endpoint.delete(anyLong());
         verify(service, times(1)).delete(anyLong());
     }
 
     @Test
-    public void testEndPointUpdate(){
-        endpoint.update(1L, employee);
-        verify(service, times(1)).update(1L, employee);
-    }
+    public void testEndPointUpdate() {
+        Employee e = new Employee();
+        e.setId(1L);
+        e.setName("Gabriel");
+        e.setAge(26L);
+        e.setCep("93110270");
+        e.setSex("Masculino");
 
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("name", e.getName());
+        parameters.put("age", e.getAge().toString());
+        parameters.put("cep", e.getCep());
+        endpoint.update(1L, parameters);
+        verify(service, times(1)).updatePatch(1L, parameters);
+    }
 }

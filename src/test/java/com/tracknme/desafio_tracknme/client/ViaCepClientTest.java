@@ -1,6 +1,5 @@
 package com.tracknme.desafio_tracknme.client;
 
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,8 +21,8 @@ public class ViaCepClientTest {
     public void cepValid() throws Exception {
         ViaCepClient client = new ViaCepClient();
         var cep = client.cep("93110270");
-        Assert.assertTrue(cep.getBody().getLogradouro().equalsIgnoreCase("Rua Fernando Abott"));
-        Assert.assertTrue(cep.getBody().getBairro().equalsIgnoreCase("Rio dos Sinos"));
+        Assert.assertTrue(cep.getLogradouro().equalsIgnoreCase("Rua Fernando Abott"));
+        Assert.assertTrue(cep.getBairro().equalsIgnoreCase("Rio dos Sinos"));
 
     }
 
