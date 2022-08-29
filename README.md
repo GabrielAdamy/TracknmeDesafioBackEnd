@@ -6,7 +6,8 @@
 
 ### POST
 - http://localhost:8080/employee/create
-Body: {
+
+- Body: {
    "name": String, (OBRIGATÓRIO)
    "age": int, (OBRIGATÓRIO)
    "sex": String, (OBRIGATÓRIO)
